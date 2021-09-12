@@ -1,0 +1,28 @@
+.header{
+    background-color: #222;
+    height:36px;
+    padding: 8px 32px 8px 16px;
+    justify-content: space-between;
+}
+
+img.logo{
+    
+  height: 35px;
+  background-color: #ff7f7f;
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+    to{
+        transform: rotate(360deg);
+    }
+    
+}
+
+
+.login-btn{
+    height: 35px;
+    display: flex;
+    float: right;
+
+}
