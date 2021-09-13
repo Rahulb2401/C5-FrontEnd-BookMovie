@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from "react";
-import Modal from "react-modal";
+import React, { Fragment,useState } from "react";
 import "./Header.css";
 import Logo from "../../assets/logo.svg";
 import { Button} from "@material-ui/core";
+import Modal from "react-modal";
+
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -13,9 +14,8 @@ import Signup from "../SignUp";
 
 
 
+
 Modal.setAppElement("#root");
-
-
 
 
 function TabPanel(props) {
@@ -39,8 +39,6 @@ function TabPanel(props) {
 }
 
 
-
-
 const useStyles = makeStyles({
     root: {
         flexGrow: 1,
@@ -55,8 +53,9 @@ const useStyles = makeStyles({
 
 
 
-export default function Header() {
 
+
+export default function Header() {
     const classes = useStyles();
     const [value, setValue] = useState(0);
     const theme = useTheme();
@@ -67,7 +66,8 @@ export default function Header() {
 
 
 
-    const [modalisOpen, setModal] = useState(false);
+    const [modalIsOpen, setModal] = useState(false);
+   
 
     return (
         <Fragment>
@@ -79,74 +79,58 @@ export default function Header() {
                 <Button variant="contained" className="Button-btn" >LogOut </Button>
                 <Button variant="contained" className="Button-btn" color="primary" >Book Show </Button>
 
+{/* Modal */}
+
+< Modal
+            isOpen={modalIsOpen}
+            onRequestClose={() => setModal(false)}
+            shouldCloseOnOverlayClick={true}
+            style={{
+                margin: '20px auto',
+                display: 'flex',
+                width: 300,
+                height: 500,
+                justifyContent: 'center'
+            }}
+
+        >
+
+            <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor="secondary"
+                textColor="default"
+                centered
+
+            >
+                <Tab label="Login" />
+                <Tab label="Sign Up" />
+
+            </Tabs>
+
+            <TabPanel className={classes.root} value={value} index={0} dir={theme.direction}>
 
 
-                {/* Modal build */}
-
-                < Modal
-                    isOpen={modalisOpen}
-                    onRequestClose={() => setModal(false)}
-                    shouldCloseOnOverlayClick={true}
-                    style={{
-                        margin: '20px auto',
-                        display:'flex',
-                        width:300,
-                        height:500,
-                        justifyContent:'center'
-                    }}
-
-                >
-
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        indicatorColor="secondary"
-                        textColor="default"
-                        centered
-
-                    >
-                        <Tab label="Login" />
-                        <Tab label="Sign Up" />
-
-                    </Tabs>
-
-                    <TabPanel className={classes.root} value={value} index={0} dir={theme.direction}>
-
-                        {/* <ValidatorForm>
-
-                            <FormControl>
-
-                                <InputLabel htmlFor="my-input">First Name</InputLabel>
-                                <Input id="my-input" aria-describedby="my-helper-text" />
-                            </FormControl>
-                            <br></br>
-
-                            <FormControl>
-                                <InputLabel htmlFor="my-input">Last Name</InputLabel>
-                                <Input id="my-input" aria-describedby="my-helper-text" />
-                            </FormControl>
-                            <br></br>
-                            <br></br>
-
-                            <Button type="submit" variant="contained" color="primary">Login</Button>
-                        </ValidatorForm> */}
-                        <Login></Login>
+                <Login></Login>
 
 
 
-                    </TabPanel>
+            </TabPanel>
 
 
 
-                    {/* Sign up form */}
+            {/* Sign up form */}
 
-                    <TabPanel className={classes.root} value={value} index={1} dir={theme.direction}>
+            <TabPanel className={classes.root} value={value} index={1} dir={theme.direction}>
 
 
-                       <Signup></Signup>
-                    </TabPanel>
+                <Signup></Signup>
+            </TabPanel>
 
-                </Modal>
+        </Modal>
+
+
+
 
 
 
