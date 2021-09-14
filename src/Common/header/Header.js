@@ -53,7 +53,7 @@ const useStyles = makeStyles({
 
 
 
-
+// Header page starts 
 
 export default function Header() {
     const classes = useStyles();
@@ -86,11 +86,11 @@ export default function Header() {
             onRequestClose={() => setModal(false)}
             shouldCloseOnOverlayClick={true}
             style={{
+                content:{
                 margin: '20px auto',
-                display: 'flex',
                 width: 300,
                 height: 500,
-                justifyContent: 'center'
+                }
             }}
 
         >
