@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
+import { ValidatorForm } from 'react-material-ui-form-validator';
 import { FormControl, Button, InputLabel, Input } from '@material-ui/core';
 
 export default function Signup(){
