@@ -10,13 +10,13 @@ export default function Signup(){
 
 <FormControl>
 
-    <InputLabel htmlFor="my-input">First Name</InputLabel>
+    <InputLabel required htmlFor="my-input">First Name</InputLabel>
     <Input id="my-input" aria-describedby="my-helper-text" />
 </FormControl>
 <br></br>
 
 <FormControl>
-    <InputLabel htmlFor="my-input">Last Name</InputLabel>
+    <InputLabel required htmlFor="my-input">Last Name</InputLabel>
     <Input id="my-input" aria-describedby="my-helper-text" />
 </FormControl>
 <br></br>
@@ -29,13 +29,13 @@ export default function Signup(){
 <br></br>
 
 <FormControl>
-    <InputLabel htmlFor="my-input">Password</InputLabel>
+    <InputLabel required htmlFor="my-input">Password</InputLabel>
     <Input id="my-input" aria-describedby="my-helper-text" />
 </FormControl>
 <br></br>
 
 <FormControl>
-    <InputLabel htmlFor="my-input">Contact Phone</InputLabel>
+    <InputLabel required htmlFor="my-input">Contact Phone</InputLabel>
     <Input id="my-input" aria-describedby="my-helper-text" />
 </FormControl>
 <br></br>

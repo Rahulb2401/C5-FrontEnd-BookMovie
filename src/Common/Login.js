@@ -13,14 +13,14 @@ return(
 
 <FormControl>
 
-    <InputLabel htmlFor="my-input">First Name</InputLabel>
+    <InputLabel required htmlFor="my-input">Username</InputLabel>
     <Input id="my-input" aria-describedby="my-helper-text" />
 </FormControl>
 <br></br>
 
 <FormControl>
-    <InputLabel htmlFor="my-input">Last Name</InputLabel>
-    <Input id="my-input" aria-describedby="my-helper-text" />
+    <InputLabel required htmlFor="my-input">Password</InputLabel>
+    <Input required type = "password" id="my-input" aria-describedby="my-helper-text"  />
 </FormControl>
 <br></br>
 <br></br>
