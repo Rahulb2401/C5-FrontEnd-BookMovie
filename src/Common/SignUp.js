@@ -23,7 +23,7 @@ export default function Signup(){
 
 
 <FormControl>
-    <InputLabel htmlFor="my-input">Email</InputLabel>
+    <InputLabel required htmlFor="my-input">Email</InputLabel>
     <Input id="my-input" aria-describedby="my-helper-text" />
 </FormControl>
 <br></br>
