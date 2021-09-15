@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import Home from './home/Home';
-import Details from '../screens/details/Details';
+import Home from '../home/Home';
+import Details from '../details/Details';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import BookShow from '../screens/bookshow/BookShow';
-import Confirmation from '../screens/confirmation/Confirmation';
+import Confirmation from '../confirmation/Confirmation';
+import BookShow from '../bookshow/BookShow';
+
 
 class Controller extends Component {
 
