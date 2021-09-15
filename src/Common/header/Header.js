@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { Link } from 'react-router-dom';
 
+
 const customStyles = {
     content: {
         top: '50%',
@@ -46,6 +47,7 @@ const Header = (props) => {
     const [value, setValue] = useState(0);
     const [usernameRequired, setUserNameRequired] = useState("dispNone");
     const [username, setUserName] = useState("");
+    const [loginFailure, setLoginFailure] = useState(false);
     const [loginPasswordRequired, setLoginPasswordRequired] = useState("dispNone");
     const [loginPassword, setLoginPassword] = useState("");
     const [firstnameRequired, setFirstNameRequired] = useState("dispNone");
@@ -62,6 +64,27 @@ const Header = (props) => {
     const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("access-token") == null ? false : true);
     const [loginApiError, setLoginApiError] = useState("");
 
+
+
+
+    const resetModalFields = () => {
+        setUserNameRequired("dispNone");
+        setUserName("");
+        setLoginPasswordRequired("dispNone");
+        setLoginPassword("");
+        setFirstNameRequired("dispNone");
+        setFirstName("");
+        setLastNameRequired("dispNone");
+        setLastName("");
+        setEmailRequired("dispNone");
+        setEmail("");
+        setRegisterPasswordRequired("dispNone");
+        setRegisterPassword("");
+        setContactRequired("dispNone");
+        setContact("");
+        setLoginFailure(false);
+        setRegistrationSuccess(false);
+    }
 
 
     const openModalHandler = () => {
@@ -84,7 +107,7 @@ const Header = (props) => {
         setContactRequired("dispNone");
         setContact("");
 
-
+resetModalFields();
     }
 
 
@@ -139,7 +162,9 @@ const Header = (props) => {
                 setLoggedIn(true);
                 closeModalHandler();
 
-            }).catch((error) => { });
+            }).catch((error) => { 
+                setLoginFailure(true);
+            });
     };
 
     const inputUsernameChangeHandler = (e) => {
@@ -282,11 +307,11 @@ const Header = (props) => {
                             </FormHelperText>
                         </FormControl>
                         <br /><br />
-                        {loggedIn === true &&
+                        {loginFailure === true &&
                             <FormControl>
-                                <span >
-                                    Login Successful!
-                                </span>
+                                <span style = {{color:"red"}}>
+                                    Login Failed. Retry!!!
+                                </span> 
                             </FormControl>
                         }
                         <br /><br />
