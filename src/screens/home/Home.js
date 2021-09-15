@@ -1,5 +1,5 @@
 
-import React, {useLayoutEffect , useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import './Home.css';
 
 import Header from '../../common/header/Header';
@@ -51,10 +51,10 @@ const styles = theme => ({
 });
 
 
-const Home = ( props ) => {
+const Home = (props) => {
 
 
-    const [movieName, setMovieName] =  useState("");
+    const [movieName, setMovieName] = useState("");
     const [upcomingMovies, setUpcomingMovies] = useState([]);
     const [releasedMovies, setReleasedMovies] = useState([]);
     const [genres, setGenres] = useState([]);
@@ -65,252 +65,268 @@ const Home = ( props ) => {
     const [releaseDateEnd, setReleaseDateEnd] = useState("");
 
 
-    useLayoutEffect (() => {
+    useLayoutEffect(() => {
 
-    // Get upcoming movies
-    let data = null;
+        // Get upcoming movies
+        let data = null;
 
-    fetch(props.baseUrl + "movies?status=PUBLISHED", {
-        method: "GET" ,
-        headers: {
-            "Cache-Control" : "no-cache",
-            'Accept': 'application/json'
-        },
-        body: data,
-    }).then((response) => response.json())
-	  .then((response) => {
-        setUpcomingMovies(response.movies);
-    });
-    
-	// Get released movies
-	
-	let dataReleased = null;
-    
+        fetch(props.baseUrl + "movies?status=PUBLISHED", {
+            method: "GET",
+            headers: {
+                "Cache-Control": "no-cache",
+                'Accept': 'application/json'
+            },
+            body: data,
+        }).then((response) => response.json())
+            .then((response) => {
+                setUpcomingMovies(response.movies);
+            });
 
-    fetch(props.baseUrl + "movies?status=RELEASED", {
-        method: "GET" ,
-        headers: {
-            "Cache-Control" : "no-cache",
-            'Accept': 'application/json'
-        },
-        body: dataReleased,
-    })
-    .then((response) => response.json())
-    .then((response) => {
-        setReleasedMovies(response.movies);
-    });
+        // Get released movies
 
-         // Get filters
-    let dataGenres = null;
+        let dataReleased = null;
 
-    fetch(props.baseUrl + "genres", {
-        method: "GET" ,
-        headers: {
-            'Cache-Control' : "no-cache",
-            'Accept': 'application/json'
-        },
-        body: dataGenres,
-    })
-    .then((response) => response.json())
-    .then((response) => {
-        setGenresList(response.genres);
-    });
+
+        fetch(props.baseUrl + "movies?status=RELEASED", {
+            method: "GET",
+            headers: {
+                "Cache-Control": "no-cache",
+                'Accept': 'application/json'
+            },
+            body: dataReleased,
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                setReleasedMovies(response.movies);
+            });
+
+        // Get filters
+        let dataGenres = null;
+
+        fetch(props.baseUrl + "genres", {
+            method: "GET",
+            headers: {
+                'Cache-Control': "no-cache",
+                'Accept': 'application/json'
+            },
+            body: dataGenres,
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                setGenresList(response.genres);
+            });
 
         // Get artists
         let dataArtists = null;
 
         fetch(props.baseUrl + "artists", {
-            method: "GET" ,
+            method: "GET",
             headers: {
-                "Cache-Control" : "no-cache",
+                "Cache-Control": "no-cache",
                 'Accept': 'application/json'
             },
             body: dataArtists,
         })
-        .then((response) => response.json())
-        .then((response) => {
-            setArtistsList(response.artists);
-        });
+            .then((response) => response.json())
+            .then((response) => {
+                setArtistsList(response.artists);
+            });
 
-}, []);
-
-
+    }, []);
 
 
-const movieNameChangeHandler = event => {
-    setMovieName(event.target.value);
-}
 
-const genreSelectHandler = event => {
-    setGenres(event.target.value);
-}
 
-const artistSelectHandler = event => {
-    setArtists(event.target.value);
-}
-
-const releaseDateStartHandler = event => {
-    setReleaseDateStart( event.target.value);
-}
-
-const releaseDateEndHandler = event => {
-    setReleaseDateEnd(event.target.value);
-}
-
-const movieClickHandler = (movieId) => {
-    props.history.push('/movie/' + movieId);
-}
-
-const filterApplyHandler = () => {
-    let queryString = "?status=RELEASED";
-    if (movieName !== "") {
-        queryString += "&title=" + movieName;
-    }
-    if (genres.length > 0) {
-        queryString += "&genres=" + genres.toString();
-    }
-    if (artists.length > 0) {
-        queryString += "&artists=" + artists.toString();
-    }
-    if (releaseDateStart !== "") {
-        queryString += "&start_date=" + releaseDateStart;
-    }
-    if (releaseDateEnd !== "") {
-        queryString += "&end_date=" + releaseDateEnd;
+    const movieNameChangeHandler = event => {
+        setMovieName(event.target.value);
     }
 
-    let dataFilter = null;
+    const genreSelectHandler = event => {
+        setGenres(event.target.value);
+    }
 
-    fetch(props.baseUrl +"movies" + encodeURI(queryString),{
-        method: "GET",
-        headers: {
-            "Cache-Control": "no-cache"
-        },
-        body: dataFilter,
-    })
-    .then((response) => response.json())
-    .then((response) => {
-        setReleasedMovies(response.movies)});
+    const artistSelectHandler = event => {
+        setArtists(event.target.value);
+    }
 
-}
+    const releaseDateStartHandler = event => {
+        setReleaseDateStart(event.target.value);
+    }
+
+    const releaseDateEndHandler = event => {
+        setReleaseDateEnd(event.target.value);
+    }
+
+    const movieClickHandler = (movieId) => {
+        props.history.push('/movie/' + movieId);
+    }
+
+    const filterApplyHandler = () => {
+        let queryString = "?status=RELEASED";
+        if (movieName !== "") {
+            queryString += "&title=" + movieName;
+        }
+        if (genres.length > 0) {
+            queryString += "&genres=" + genres.toString();
+        }
+        if (artists.length > 0) {
+            queryString += "&artists=" + artists.toString();
+        }
+        if (releaseDateStart !== "") {
+            queryString += "&start_date=" + releaseDateStart;
+        }
+        if (releaseDateEnd !== "") {
+            queryString += "&end_date=" + releaseDateEnd;
+        }
+
+        let dataFilter = null;
+
+        fetch(props.baseUrl + "movies" + encodeURI(queryString), {
+            method: "GET",
+            headers: {
+                "Cache-Control": "no-cache"
+            },
+            body: dataFilter,
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                setReleasedMovies(response.movies)
+            });
+
+    }
 
 
 
-const { classes } = props;
+    const { classes } = props;
 
-return( <div>
-    <Header baseUrl={props.baseUrl} />
+    return (<div>
+        <Header baseUrl={props.baseUrl} />
 
-    <div className={classes.upcomingMoviesHeading}>
-        <span>Upcoming Movies</span>
-    </div>
 
-    <GridList cellHeight={250} cols={6} className={classes.gridListUpcomingMovies} >
-        {upcomingMovies.map(movie => (
-            <GridListTile key={"upcoming" + movie.id}>
-                <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
-                <GridListTileBar title={movie.title} />
-            </GridListTile>
-        ))}
-    </GridList>
+        {/* Upcoming movies image scroller */}
 
-    <div className="flex-container">
-        <div className="left">
-            <GridList cellHeight={350} cols={4} className={classes.gridListMain}>
-                {releasedMovies.map(movie => (
-                    <GridListTile onClick={() => movieClickHandler(movie.id)} className="released-movie-grid-item" key={"grid" + movie.id}>
-                        <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
-                        <GridListTileBar
-                            title={movie.title}
-                            subtitle={<span>Release Date: {new Date(movie.release_date).toDateString()}</span>}
-                        />
-                    </GridListTile>
-                ))}
-            </GridList>
+        <div className={classes.upcomingMoviesHeading}>
+            <span>Upcoming Movies</span>
         </div>
-        <div className="right">
-            <Card>
-                <CardContent>
-                    <FormControl className={classes.formControl}>
-                        <Typography className={classes.title} color="textSecondary">
-                            FIND MOVIES BY:
-                        </Typography>
-                    </FormControl>
 
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="movieName">Movie Name</InputLabel>
-                        <Input id="movieName" onChange={movieNameChangeHandler} />
-                    </FormControl>
+        <GridList cellHeight={250} cols={6} className={classes.gridListUpcomingMovies} >
+            {upcomingMovies.map(movie => (
+                <GridListTile key={"upcoming" + movie.id}>
+                    <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
+                    <GridListTileBar title={movie.title} />
+                </GridListTile>
+            ))}
+        </GridList>
 
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="select-multiple-checkbox">Genres</InputLabel>
-                        <Select
-                            multiple
-                            input={<Input id="select-multiple-checkbox-genre" />}
-                             renderValue={selected => selected.join(",")}
-                        
-                            value={genres}
-                            onChange={genreSelectHandler}
-                        >
-                            {genresList.map(genre => (
-                                <MenuItem key={genre.id} value={genre.genre}>
-                                    <Checkbox checked={genres.indexOf(genre.genre) > -1} />
-                                    <ListItemText primary={genre.genre} />
-                                </MenuItem>
-                            ))}
-                        </Select> 
-                    </FormControl>
 
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
-                        <Select
-                            multiple
-                            input={<Input id="select-multiple-checkbox" />}
-                             renderValue={selected => selected.join(',')}
-                            value={artists}
-                            onChange={artistSelectHandler}
-                        >
-                            {artistsList.map(artist => (
-                                <MenuItem key={artist.id} value={artist.first_name + " " + artist.last_name}>
-                                    <Checkbox checked={artists.indexOf(artist.first_name + " " + artist.last_name) > -1} />
-                                    <ListItemText primary={artist.first_name + " " + artist.last_name} />
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
 
-                    <FormControl className={classes.formControl}>
-                        <TextField
-                            id="releaseDateStart"
-                            label="Release Date Start"
-                            type="date"
-                            defaultValue=""
-                            InputLabelProps={{ shrink: true }}
-                            onChange={releaseDateStartHandler}
-                        />
-                    </FormControl>
 
-                    <FormControl className={classes.formControl}>
-                        <TextField
-                            id="releaseDateEnd"
-                            label="Release Date End"
-                            type="date"
-                            defaultValue=""
-                            InputLabelProps={{ shrink: true }}
-                            onChange={releaseDateEndHandler}
-                        />
-                    </FormControl>
-                    <br /><br />
-                    <FormControl className={classes.formControl}>
-                        <Button onClick={() =>filterApplyHandler()} variant="contained" color="primary">
-                            APPLY
-                        </Button>
-                    </FormControl>
-                </CardContent>
-            </Card>
+
+        <div className="flex-container">
+            <div className="left">
+
+                {/* Released Movies Grid */}
+
+                <GridList cellHeight={350} cols={4} className={classes.gridListMain}>
+                    {releasedMovies.map(movie => (
+                        <GridListTile onClick={() => movieClickHandler(movie.id)} className="released-movie-grid-item" key={"grid" + movie.id}>
+                            <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
+                            <GridListTileBar
+                                title={movie.title}
+                                subtitle={<span>Release Date: {new Date(movie.release_date).toDateString()}</span>}
+                            />
+                        </GridListTile>
+                    ))}
+                </GridList>
+            </div>
+
+
+
+            {/* Filter movies card */}
+
+            <div className="right">
+                <Card>
+                    <CardContent>
+                        <FormControl className={classes.formControl}>
+                            <Typography className={classes.title} color="textSecondary">
+                                FIND MOVIES BY:
+                            </Typography>
+                        </FormControl>
+
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="movieName">Movie Name</InputLabel>
+                            <Input id="movieName" onChange={movieNameChangeHandler} />
+                        </FormControl>
+
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="select-multiple-checkbox">Genres</InputLabel>
+                            <Select
+                                multiple
+                                input={<Input id="select-multiple-checkbox-genre" />}
+                                renderValue={selected => selected.join(",")}
+
+                                value={genres}
+                                onChange={genreSelectHandler}
+                            >
+                                {genresList.map(genre => (
+                                    <MenuItem key={genre.id} value={genre.genre}>
+                                        <Checkbox checked={genres.indexOf(genre.genre) > -1} />
+                                        <ListItemText primary={genre.genre} />
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
+                            <Select
+                                multiple
+                                input={<Input id="select-multiple-checkbox" />}
+                                renderValue={selected => selected.join(',')}
+                                value={artists}
+                                onChange={artistSelectHandler}
+                            >
+                                {artistsList.map(artist => (
+                                    <MenuItem key={artist.id} value={artist.first_name + " " + artist.last_name}>
+                                        <Checkbox checked={artists.indexOf(artist.first_name + " " + artist.last_name) > -1} />
+                                        <ListItemText primary={artist.first_name + " " + artist.last_name} />
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                id="releaseDateStart"
+                                label="Release Date Start"
+                                type="date"
+                                defaultValue=""
+                                InputLabelProps={{ shrink: true }}
+                                onChange={releaseDateStartHandler}
+                            />
+                        </FormControl>
+
+                        <FormControl className={classes.formControl}>
+                            <TextField
+                                id="releaseDateEnd"
+                                label="Release Date End"
+                                type="date"
+                                defaultValue=""
+                                InputLabelProps={{ shrink: true }}
+                                onChange={releaseDateEndHandler}
+                            />
+                        </FormControl>
+                        <br /><br />
+                        <FormControl className={classes.formControl}>
+                            <Button onClick={() => filterApplyHandler()} variant="contained" color="primary">
+                                APPLY
+                            </Button>
+                        </FormControl>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
-    </div>
-</div > )
+    </div >)
 }
 
 
