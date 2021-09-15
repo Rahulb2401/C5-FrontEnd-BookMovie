@@ -1,4 +1,4 @@
-.header {
+/* .header {
     background-color: #222;
     height: 36px;
     padding: 8px 32px 8px 16px;
@@ -28,4 +28,47 @@ img.logo {
 
 
 
+ */
 
+
+
+ .header {
+    background-color: #222;
+    height: 36px;
+    padding: 8px 32px 8px 16px;
+}
+
+.lgn-btn {
+    float: right;
+}
+
+.app-logo {
+    animation: app-logo-spin infinite 8s linear;
+    height: 35px;
+    background: #ff7f7f;
+}
+
+.bs-btn {
+    float: right;
+    margin-right: 8px;
+}
+
+@keyframes app-logo-spin {
+    from { transform: scaleX(-1); }
+}
+
+.tabs {
+    margin-bottom: 20px;
+}
+
+.dispNone {
+    display: none;
+}
+
+.dispBlock {
+    display: block;
+}
+
+.changecolor {
+    color: red;
+}

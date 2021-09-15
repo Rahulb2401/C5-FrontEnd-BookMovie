@@ -1,140 +1,498 @@
-import React, { Fragment,useState } from "react";
-import "./Header.css";
-import Logo from "../../assets/logo.svg";
-import { Button} from "@material-ui/core";
-import Modal from "react-modal";
+// import React, { Fragment,useState } from "react";
+// import "./Header.css";
+// import Logo from "../../assets/logo.svg";
+// import { Button} from "@material-ui/core";
+// import Modal from "react-modal";
 
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
+// import { makeStyles, useTheme } from '@material-ui/core/styles';
+// import Typography from '@material-ui/core/Typography';
+// import Box from '@material-ui/core/Box';
+// import Login from '../Login';
+// import Signup from "../SignUp";
+
+
+
+
+// Modal.setAppElement("#root");
+
+
+// function TabPanel(props) {
+//     const { children, value, index, ...other } = props;
+
+//     return (
+//         <div
+//             role="tabpanel"
+//             hidden={value !== index}
+//             id={`full-width-tabpanel-${index}`}
+//             aria-labelledby={`full-width-tab-${index}`}
+//             {...other}
+//         >
+//             {value === index && (
+//                 <Box p={3}>
+//                     <Typography>{children}</Typography>
+//                 </Box>
+//             )}
+//         </div>
+//     );
+// }
+
+
+// const useStyles = makeStyles({
+//     root: {
+//         flexGrow: 1,
+//         display: 'flex',
+//         justifyContent: 'center'
+//     },
+//     button:{
+//         display:'flex',
+//         justifyContent:'center'
+//     }
+// });
+
+
+
+// // Header page starts 
+
+// export default function Header() {
+//     const classes = useStyles();
+//     const [value, setValue] = useState(0);
+//     const theme = useTheme();
+
+//     const handleChange = (event, newValue) => {
+//         setValue(newValue);
+//     };
+
+
+
+//     const [modalIsOpen, setModal] = useState(false);
+
+
+//     return (
+//         <Fragment>
+//             <div className="header" >
+
+//                 <img className="logo" src={Logo} alt="logo" ></img>
+
+//                 <Button variant="contained" className="Button-btn" color="default" onClick={() => setModal(true)} > Login  </Button>
+//                 <Button variant="contained" className="Button-btn" >LogOut </Button>
+//                 <Button variant="contained" className="Button-btn" color="primary" >Book Show </Button>
+
+// {/* Modal */}
+
+// < Modal
+//             isOpen={modalIsOpen}
+//             onRequestClose={() => setModal(false)}
+//             shouldCloseOnOverlayClick={true}
+//             style={{
+//                 content:{
+//                 margin: '20px auto',
+//                 width: 300,
+//                 height: 500,
+//                 }
+//             }}
+
+//         >
+
+//             <Tabs
+//                 value={value}
+//                 onChange={handleChange}
+//                 indicatorColor="secondary"
+//                 textColor="default"
+//                 centered
+
+//             >
+//                 <Tab label="Login" />
+//                 <Tab label="Sign Up" />
+
+//             </Tabs>
+
+//             <TabPanel className={classes.root} value={value} index={0} dir={theme.direction}>
+
+
+//                 <Login></Login>
+
+
+
+//             </TabPanel>
+
+
+
+//             {/* Sign up form */}
+
+//             <TabPanel className={classes.root} value={value} index={1} dir={theme.direction}>
+
+
+//                 <Signup></Signup>
+//             </TabPanel>
+
+//         </Modal>
+
+
+
+
+
+
+//             </div >
+//         </Fragment >
+//     );
+// }
+
+
+
+import React, { useState } from "react";
+import './Header.css';
+import Button from '@material-ui/core/Button';
+import logo from '../../assets/logo.svg';
+import Modal from 'react-modal';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Login from '../Login';
-import Signup from "../SignUp";
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import PropTypes from 'prop-types';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import { Link } from 'react-router-dom';
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
 
 
-
-
-Modal.setAppElement("#root");
-
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
+const TabContainer = function (props) {
     return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
+        <Typography component="div" style={{ padding: 0, textAlign: 'center' }}>
+            {props.children}
+        </Typography>
+    )
 }
 
 
-const useStyles = makeStyles({
-    root: {
-        flexGrow: 1,
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    button:{
-        display:'flex',
-        justifyContent:'center'
-    }
-});
+
+TabContainer.propTypes = {
+    children: PropTypes.node.isRequired
+}
 
 
-
-// Header page starts 
-
-export default function Header() {
-    const classes = useStyles();
+const Header = (props) => {
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [value, setValue] = useState(0);
-    const theme = useTheme();
+    const [usernameRequired, setUserNameRequired] = useState("dispNone");
+    const [username, setUserName] = useState("");
+    const [loginPasswordRequired, setLoginPasswordRequired] = useState("dispNone");
+    const [loginPassword, setLoginPassword] = useState("");
+    const [firstnameRequired, setFirstNameRequired] = useState("dispNone");
+    const [firstname, setFirstName] = useState("");
+    const [lastnameRequired, setLastNameRequired] = useState("dispNone");
+    const [lastname, setLastName] = useState("");
+    const [emailRequired, setEmailRequired] = useState("dispNone");
+    const [email, setEmail] = useState("");
+    const [registerPasswordRequired, setRegisterPasswordRequired] = useState("dispNone");
+    const [registerPassword, setRegisterPassword] = useState("");
+    const [contactRequired, setContactRequired] = useState("dispNone");
+    const [contact, setContact] = useState("");
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem("access-token") == null ? false : true);
+    const [loginApiError, setLoginApiError] = useState("");
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+
+
+    const openModalHandler = () => {
+
+
+        setModalIsOpen(true);
+        setValue(0);
+        setUserNameRequired("dispNone");
+        setUserName("");
+        setLoginPasswordRequired("dispNone");
+        setLoginPassword("");
+        setFirstNameRequired("dispNone");
+        setFirstName("");
+        setLastNameRequired("dispNone");
+        setLastName("");
+        setEmailRequired("dispNone");
+        setEmail("");
+        setRegisterPasswordRequired("dispNone");
+        setRegisterPassword("");
+        setContactRequired("dispNone");
+        setContact("");
+
+
+    }
+
+
+
+    const closeModalHandler = () => {
+        setModalIsOpen(false);
+    }
+
+
+
+    const tabChangeHandler = (event, value) => {
+        setValue(value);
+
+    }
+
+
+
+    const loginClickHandler = () => {
+
+
+        username === "" ? setUserNameRequired("dispBlock") : setUserNameRequired("dispNone");
+        loginPassword === "" ? setLoginPasswordRequired("dispBlock") : setLoginPasswordRequired("dispNone");
+
+        setLoginApiError("");
+        if (username === "" || loginPassword === "") return;
+
+
+        let dataLogin = null;
+        fetch(props.baseUrl + "auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+                Authorization: "Basic " + window.btoa(username + ":" + loginPassword)
+
+            },
+            body: dataLogin,
+        })
+            .then(async (response) => {
+                if (response.ok) {
+                    sessionStorage.setItem("access-token", response.headers.get("access-token"));
+                    return response.json();
+                } else {
+                    let error = await response.json();
+                    setLoginApiError(error.message);
+                    throw new Error("Something Went Wrong");
+
+                }
+            })
+            .then((data) => {
+                sessionStorage.setItem("uuid", data.id);
+                setLoggedIn(true);
+                closeModalHandler();
+
+            }).catch((error) => { });
     };
 
+    const inputUsernameChangeHandler = (e) => {
+        setUserName(e.target.value);
+    }
+
+    const inputLoginPasswordChangeHandler = (e) => {
+        setLoginPassword(e.target.value);
+    }
 
 
-    const [modalIsOpen, setModal] = useState(false);
-   
+    const registerClickHandler = () => {
+
+        setFirstName === "" ? setFirstNameRequired("dispBlock") : setFirstNameRequired("dispNone");
+        setLastName === "" ? setLastNameRequired("dispBlock") : setLastNameRequired("dispNone");
+        setEmail === "" ? setEmailRequired("dispBlock") : setEmailRequired("dispNone");
+        setRegisterPassword === "" ? setRegisterPasswordRequired("dispBlock") : setRegisterPasswordRequired("dispNone");
+        setContact === "" ? setContactRequired("dispBlock") : setContactRequired("dispNone");
+
+
+
+        let dataSignup = JSON.stringify({
+            email_address: email,
+            first_name: firstname,
+            last_name: lastname,
+            mobile_number: contact,
+            password: registerPassword
+        });
+
+        fetch(props.baseUrl + "signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+                Authorization: "Basic" + window.btoa(username + ":" + loginPassword)
+
+            },
+            body: dataSignup,
+        }).then((data) => { setRegistrationSuccess(true) });
+
+
+    }
+
+
+
+
+    const inputFirstNameChangeHandler = (e) => {
+        setFirstName(e.target.value);
+    }
+
+    const inputLastNameChangeHandler = (e) => {
+        setLastName(e.target.value);
+    }
+
+    const inputEmailChangeHandler = (e) => {
+        setEmail(e.target.value);
+    }
+
+    const inputRegisterPasswordChangeHandler = (e) => {
+        setRegisterPassword(e.target.value);
+    }
+
+    const inputContactChangeHandler = (e) => {
+        setContact(e.target.value);
+    }
+
+    const logoutHandler = (e) => {
+        sessionStorage.removeItem("uuid");
+        sessionStorage.removeItem("access-token");
+        console.log(' reached here');
+        setLoggedIn(false);
+    }
+
 
     return (
-        <Fragment>
-            <div className="header" >
-
-                <img className="logo" src={Logo} alt="logo" ></img>
-
-                <Button variant="contained" className="Button-btn" color="default" onClick={() => setModal(true)} > Login  </Button>
-                <Button variant="contained" className="Button-btn" >LogOut </Button>
-                <Button variant="contained" className="Button-btn" color="primary" >Book Show </Button>
-
-{/* Modal */}
-
-< Modal
-            isOpen={modalIsOpen}
-            onRequestClose={() => setModal(false)}
-            shouldCloseOnOverlayClick={true}
-            style={{
-                content:{
-                margin: '20px auto',
-                width: 300,
-                height: 500,
+        <div>
+            <header className="header">
+                <img src={logo} className="app-logo" alt="Movies App Logo" />
+                {!loggedIn ?
+                    <div className="lgn-btn">
+                        <Button variant="contained" color="default" onClick={openModalHandler}>
+                            Login
+                        </Button>
+                    </div>
+                    :
+                    <div className="lgn-btn">
+                        <Button variant="contained" color="default" onClick={logoutHandler}>
+                            Logout
+                        </Button>
+                    </div>
                 }
-            }}
+                {props.showBookShowButton === "true" && !loggedIn
+                    ? <div className="bs-btn">
+                        <Button variant="contained" color="primary" onClick={openModalHandler}>
+                            Book Show
+                        </Button>
+                    </div>
+                    : ""
+                }
 
-        >
+                {props.showBookShowButton === "true" && loggedIn
+                    ? <div className="bs-btn">
+                        <Link to={"/bookshow/" + props.id}>
+                            <Button variant="contained" color="primary">
+                                Book Show
+                            </Button>
+                        </Link>
+                    </div>
+                    : ""
+                }
 
-            <Tabs
-                value={value}
-                onChange={handleChange}
-                indicatorColor="secondary"
-                textColor="default"
-                centered
-
+            </header>
+            <Modal
+                ariaHideApp={false}
+                isOpen={modalIsOpen}
+                contentLabel="Login"
+                onRequestClose={closeModalHandler}
+                style={customStyles}
             >
-                <Tab label="Login" />
-                <Tab label="Sign Up" />
+                <Tabs className="tabs" value={value} onChange={tabChangeHandler}>
+                    <Tab label="Login" />
+                    <Tab label="Register" />
+                </Tabs>
 
-            </Tabs>
+                {value === 0 &&
+                    <TabContainer>
+                        <FormControl required>
+                            <InputLabel htmlFor="username">Username</InputLabel>
+                            <Input id="username" type="text" username={username} onChange={inputUsernameChangeHandler} />
+                            <FormHelperText className={usernameRequired}>
+                                <span className="changecolor">Username required</span>
+                            </FormHelperText>
+                        </FormControl>
+                        <br /><br />
+                        <FormControl required>
+                            <InputLabel htmlFor="loginPassword">Password</InputLabel>
+                            <Input id="loginPassword" type="password" loginpassword={loginPassword} onChange={inputLoginPasswordChangeHandler} />
+                            <FormHelperText className={loginPasswordRequired}>
+                                <span className="red">Password required</span>
+                            </FormHelperText>
+                        </FormControl>
+                        <br /><br />
+                        {loggedIn === true &&
+                            <FormControl>
+                                <span >
+                                    Login Successful!
+                                </span>
+                            </FormControl>
+                        }
+                        <br /><br />
+                        <Button variant="contained" color="primary" onClick={loginClickHandler}>LOGIN</Button>
+                    </TabContainer>
+                }
 
-            <TabPanel className={classes.root} value={value} index={0} dir={theme.direction}>
+                {value === 1 &&
+                    <TabContainer>
+                        <FormControl required>
+                            <InputLabel htmlFor="firstname">First Name</InputLabel>
+                            <Input id="firstname" type="text" firstname={firstname} onChange={inputFirstNameChangeHandler} />
+                            <FormHelperText className={firstnameRequired}>
+                                <span className="changecolor">FirstName required</span>
+                            </FormHelperText>
+                        </FormControl>
+                        <br /><br />
+                        <FormControl required>
+                            <InputLabel htmlFor="lastname">Last Name</InputLabel>
+                            <Input id="lastname" type="text" lastname={lastname} onChange={inputLastNameChangeHandler} />
+                            <FormHelperText className={lastnameRequired}>
+                                <span className="changecolor">LastName required</span>
+                            </FormHelperText>
+                        </FormControl>
+                        <br /><br />
+                        <FormControl required>
+                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <Input id="email" type="text" email={email} onChange={inputEmailChangeHandler} />
+                            <FormHelperText className={emailRequired}>
+                                <span className="changecolor">Email required</span>
+                            </FormHelperText>
+                        </FormControl>
+                        <br /><br />
+                        <FormControl required>
+                            <InputLabel htmlFor="registerPassword">Password</InputLabel>
+                            <Input id="registerPassword" type="password" registerpassword={registerPassword} onChange={inputRegisterPasswordChangeHandler} />
+                            <FormHelperText className={registerPasswordRequired}>
+                                <span className="changecolor">Password required</span>
+                            </FormHelperText>
+                        </FormControl>
+                        <br /><br />
+                        <FormControl required>
+                            <InputLabel htmlFor="contact">Contact No.</InputLabel>
+                            <Input id="contact" type="text" contact={contact} onChange={inputContactChangeHandler} />
+                            <FormHelperText className={contactRequired}>
+                                <span className="changecolor">Phone number required</span>
+                            </FormHelperText>
+                        </FormControl>
+                        <br /><br />
+                        {registrationSuccess === true &&
+                            <FormControl>
+                                <span >
+                                    Registration Successful. Please Login!
+                                </span>
+                            </FormControl>
+                        }
+                        <br /><br />
+                        <Button variant="contained" color="primary" onClick={registerClickHandler}>REGISTER</Button>
+                    </TabContainer>
+                }
+            </Modal>
+        </div>
+    )
 
-
-                <Login></Login>
-
-
-
-            </TabPanel>
-
-
-
-            {/* Sign up form */}
-
-            <TabPanel className={classes.root} value={value} index={1} dir={theme.direction}>
-
-
-                <Signup></Signup>
-            </TabPanel>
-
-        </Modal>
-
-
-
-
-
-
-            </div >
-        </Fragment >
-    );
 }
+
+export default Header;
